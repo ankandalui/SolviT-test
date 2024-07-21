@@ -12,7 +12,7 @@ import { toast } from "react-hot-toast";
 type Props = {};
 
 const EditCategories = (props: Props) => {
-  const { data, isLoading,refetch } = useGetHeroDataQuery("Categories", {
+  const { data, isLoading, refetch } = useGetHeroDataQuery("Categories", {
     refetchOnMountOrArgChange: true,
   });
   const [editLayout, { isSuccess: layoutSuccess, error }] =
@@ -24,7 +24,7 @@ const EditCategories = (props: Props) => {
       setCategories(data.layout?.categories);
     }
     if (layoutSuccess) {
-        refetch();
+      refetch();
       toast.success("Categories updated successfully");
     }
 
@@ -34,7 +34,7 @@ const EditCategories = (props: Props) => {
         toast.error(errorData?.data?.message);
       }
     }
-  }, [data, layoutSuccess, error,refetch]);
+  }, [data, layoutSuccess, error, refetch]);
 
   const handleCategoriesAdd = (id: any, value: string) => {
     setCategories((prevCategory: any) =>
