@@ -3,9 +3,12 @@ import mongoose, { Document, Model, Schema } from "mongoose";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
+//for validation og email need RegExp
 const emailRegexPattern: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+
 export interface IUser extends Document {
+  _id:string,
   name: string;
   email: string;
   password: string;
@@ -40,6 +43,7 @@ const userSchema: Schema<IUser> = new mongoose.Schema(
     },
     password: {
       type: String,
+      
       minlength: [6, "Password must be at least 6 characters"],
       select: false,
     },
@@ -76,7 +80,7 @@ userSchema.pre<IUser>("save", async function (next) {
 // sign access token
 userSchema.methods.SignAccessToken = function () {
   return jwt.sign({ id: this._id }, process.env.ACCESS_TOKEN || "", {
-    expiresIn: "5m",
+    expiresIn: "1d",
   });
 };
 
